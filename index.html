@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vuex Test</title>
+
+    <style>
+        @import url("public/min/css/test.css")
+    </style>
+</head>
+<body>
+    <h1>Vuex Test</h1>
+    <p>State: 資料</p>
+    <p>Getter: 運算後的資料</p>
+    <p>Mutation: 同步的運算</p>
+    <p>Action: 非同步的運算</p>
+    <p>Module: 讓你可以分成多個Store(模組化)</p>
+    <p>Plugins: 可以放多的函數至插件裡，會在Store初始化、每次Mutation調用時使用到(後者的方法為store.subscribe((mutation, state))</p>
+    <p>Strict Mode(嚴格模式): 無論何時發生了狀態變更且不是由 mutation 函數引起的，將會拋出錯誤。這能保證所有的狀態變更都能被調試工具跟踪到。</p>
+    <div id="app">
+    <h2>Store</h2>
+    <h3>store: 跨頁面、Component的資料</h3>
+    <button @click="commitIncrement()">store.commit('increment')</button>
+    <p>store count: {{ store.state.count }}</p>
+    </div>
+    <hr>
+    <div id="app1">
+        <h2>State</h2>
+        <Counter></Counter>
+        <h3> 
+            <a href="https://vuex.vuejs.org/guide/state.html#the-mapstate-helper">mapState</a>: 當一個組件需要獲取多個 state 的時候，如果每次都要宣告為 computed 會很麻煩，可以使用 mapState 輔助函數，將繁瑣的流程簡化。
+        </h3>
+    </div>
+    <hr>
+    <div id="app2">
+        <h2>Getter</h2>
+        <h3>
+            Vuex 允許我們在 store 中定義“getter”（可以認為是 store 的計算屬性）。就像計算屬性一樣，getter 的返回值會根據它的依賴被緩存起來，且只有當它的依賴值發生了改變才會被重新計算。
+        </h3>
+        <p>store.getters.doneTodos: {{ store.getters.doneTodos }}</p>
+        <h3>gatter可以有第二參數[state,gatters]=> doneTodosLen: (state, getters)</h3>
+        <p>store.getters.doneTodosLen: {{ store.getters.doneTodosLen }}</p>
+        <h3>用在computed</h3>
+        <p>this.$store.getters.doneTodosLen: {{ doneTodosLen }}</p>
+        <h3>可以用方法訪問(放自己要的參數)</h3>
+        <p>getTodoById: (state) => (id) => {}</p>
+        <p>store.getters.getTodoById(2): {{ store.getters.getTodoById(2) }}</p>
+        <h3>
+            <a href="https://vuex.vuejs.org/guide/getters.html#the-mapgetters-helper">mapGetters</a>
+            :輔助函數僅僅是將 store 中的 getter 映射到局部計算屬性
+        </h3>
+    </div>
+    <hr>
+    <div id="app3">
+        <h2>Mutation</h2>
+        <h3>更改 Vuex 的 store 中的狀態的唯一方法是提交 mutation。 Vuex 中的 mutation 非常類似於事件：每個 mutation 都有一個字符串的 事件類型 (type) 和 一個 回調函數 (handler)。這個回調函數就是我們實際進行狀態更改的地方</h3>
+        <h3>mutation 處理的都是同步事件</h3>
+        <h3>也可以把所有type的事件放在一個檔案內再一一引入使用</h3>
+        <p>
+            <button @click="store.commit('myEvent', {test: 'test1'})">store.commit('myEvent', {test: 'test1'})</button>
+            {{ store.state.msg }}
+        </p>
+        <p>
+            <button @click="store.commit({ type:'myEvent2', amount: 10})">store.commit({ type:'myEvent2', amount: 10})</button>
+            {{ store.state.msg }}
+        </p>
+    </div>
+    <div id="app4">
+        <h2>Action</h2>
+        <h3>
+            Action 類似於 mutation，不同在於：<br>
+            Action 提交的是 mutation，而不是直接變更狀態。<br>
+            Action 可以包含任意非同步操作。<br>
+        </h3>
+        <p>
+            <button @click="store.dispatch('myEventAsync', { actiontest1: 'aa' })">
+                store.dispatch('myEventAsync', { actiontest1: 'aa' })
+            </button>
+            {{ store.state.msg }}
+        </p>
+        <p>
+            <button @click="store.dispatch({ type:'myEventAsync', actiontest2: 'test' })">
+                store.dispatch({ type:'myEventAsync', actiontest2: 'test' })
+            </button>
+            {{ store.state.msg }}
+        </p>
+        <h3>
+            <a href="https://vuex.vuejs.org/guide/actions.html#composing-actions">组合 Action</a>
+            :通常是非同步的，那麼如何知道 action 什麼時候結束呢？更重要的是，我們如何才能組合多個 action，以處理更加複雜的異步流程？
+             首先，你需要明白 store.dispatch 可以處理被觸發的 action 的處理函數返回的 Promise，並且 store.dispatch 仍舊返回 Promise
+        </h3>
+        <p>範例: 先建立一個return是Promise的action(actionA), 調用時就可以使用.them,.catch去接reslove, reject</p>
+        <p>
+            調用: store.dispatch('actionA').then(() => {...})    
+        </p>
+    </div>
+    <div id="app5">
+        <h2>Module</h2>
+        <h3>
+            應用的所有狀態會集中到一個比較大的對象。當應用變得非常複雜時，store 對象就有可能變得相當臃腫。
+        </h3>
+        <h3>
+            為了解決以上問題，Vuex 允許我們將 store 分割成模塊（module）。每個模塊擁有自己的 state、mutation、action、getter
+        </h3>
+        const store = new Vuex.Store({ <br>
+            modules: {<br>
+                a: moduleA,<br>
+                b: moduleB<br>
+            }<br>
+        })<br>
+        store.state.a // -> moduleA <br>
+        store.state.b // -> moduleB <br>
+    </div>
+    <div id="app6">
+        <h1>Plugin</h1>
+        <h3>會在Store初始化、Mutation被調用時使用(store.subscribe)</h3>
+    </div>
+
+
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <script src="node_modules/vuex/dist/vuex.min.js"></script>
+
+
+    <script src="public/min/js/test.js"></script>
+    <script>
+        
+    </script>
+</body>
+</html>
