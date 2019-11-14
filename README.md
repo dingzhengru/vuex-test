@@ -8,9 +8,9 @@
 ### Strict Mode(嚴格模式): 無論何時發生了狀態變更且不是由 mutation 函數引起的，將會拋出錯誤。這能保證所有的狀態變更都能被調試工具跟踪到。
 
 
-*  <a href="basic-use">Basic use</a>
-*  <a href="利用Module配置">利用Module配置</a>
-*  <a href="module-namespaced">Module Namespaced</a>
+*  <a href="#basic-use">Basic use</a>
+*  <a href="#利用Module配置">利用Module配置</a>
+*  <a href="#module-namespaced">Module Namespaced</a>
 ## Basic use
 
 ```
