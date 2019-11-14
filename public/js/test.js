@@ -47,9 +47,11 @@ const store = new Vuex.Store({
     },
     actions: {
         myEventAsync (context, payload) {
+            // 假設不是用context直接接而用({ commit }) 就可以直接用commit()
             context.commit('myEvent', payload);
         }, 
         actionA ({ commit }) {
+            // { commit } 就可以不用context.commit() 可以直接 commit()
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     commit('someMutation')
