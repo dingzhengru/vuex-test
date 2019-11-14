@@ -10,7 +10,7 @@
 
 *  <a href="#basic-use">Basic use</a>
 *  <a href="#利用Module配置">利用Module配置</a>
-*  <a href="#module-namespaced">Module Namespaced</a>
+*  <a href="#module-namespaced如何調用各個module">Module Namespaced(如何調用各個Module)</a>
 ## Basic use
 
 ```
@@ -60,8 +60,9 @@ const OtherStore = {
 export default OtherStore;
 ```
 
-## Module Namespaced
+## Module Namespaced(如何調用各個Module)
 **如何調用各個Module的state, getter, mutations, actions**  
+** namespaced必須設為true
 ```
 this.$store.state.other // state
 
