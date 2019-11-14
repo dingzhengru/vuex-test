@@ -62,7 +62,7 @@ export default OtherStore;
 
 ## Module Namespaced(如何調用各個Module)
 **如何調用各個Module的state, getter, mutations, actions**  
-**  namespaced必須設為true
+*  namespaced必須設為true
 ```
 this.$store.state.other // state
 
