@@ -11,8 +11,8 @@
 *  <a href="#basic-use">Basic use</a>
 *  <a href="#利用Module配置">利用Module配置</a>
 *  <a href="#module-namespaced如何調用各個module">Module Namespaced(如何調用各個Module)</a>
-*  <a href="#搭配firebase的user store">搭配firebase的user store(store-firebase-user.js)</a>
-*  <a href="#基本的firebase的CRUD架構store">基本的firebase的CRUD架構store(store-firebase-products.js)</a>
+*  <a href="#搭配firebase的user-storestore-firebase-userjs">搭配firebase的user store(store-firebase-user.js)</a>
+*  <a href="#基本的firebase的crud架構storestore-firebase-productsjs">基本的firebase架構的store(store-firebase-articles.js)</a>
 ## Basic use
 
 ```
@@ -77,4 +77,9 @@ this.$store.dispatch('other/xxxGetter', payload); // actions
 
 ## 搭配firebase的user store(store-firebase-user.js)
 
-## 基本的firebase的CRUD架構store(store-firebase-products.js)
+*  使用email，password的登入系統
+*  包含註冊、登入、登出、驗證信箱
+
+## 基本的firebase架構的store(store-firebase-articles.js)
+
+*  包含新增、刪除、修改、搜尋、排序、分頁
