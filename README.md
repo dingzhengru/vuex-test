@@ -1,6 +1,6 @@
 # vuex-test
 ### State: 資料
-### Getter: 運算後的資料，基本上都是使用State資料經過運算後回傳，通常不接參數的
+### Getters: 運算後的資料，基本上都是使用State資料經過運算後回傳，通常不接參數的
 ### Mutation: 同步的運算，不能回傳
 ### Action: 非同步的運算
 ### Module: 讓你可以分成多個Store(模組化)
@@ -17,17 +17,34 @@
 
 ```
 const store = new Vuex.Store({
+    namespaced: true,
     state: {
-
+        data: null // 使用: this.$store.state.module.data (但不建議直接調用)
     },
     getters: {
-        
+        // 使用: this.$store.getters['module/getData']
+        getData: (state) => {
+            return state.data
+        },
+        // 使用: this.$store.getters['module/getDataById'](id)
+        getDataById: (state) => (id) => {
+            return state.data[id]
+        }
     },
     mutations: {
-        
+        // 使用: this.$store.commit('module/setData', payload)
+        setData(state, payload) {
+            state.data = payload
+        }
     },
     actions: {
-        
+        // 使用: this.$store.dispatch('module/setData', payload)
+        getDataAction({ state, getters, dispatch, commit }, payload) {
+            // 做些非同步的事
+            return new Promise((resolve, reject) => {
+                // ...
+            })
+        }
     },
     plugins:[]
 })
@@ -59,7 +76,7 @@ const OtherStore = {
     actions: {}
 }
 
-export default OtherStore;
+export default OtherStore
 ```
 
 ## Module Namespaced(如何調用各個Module)
@@ -68,11 +85,11 @@ export default OtherStore;
 ```
 this.$store.state.other // state
 
-this.$store.getters['other/xxxGetter']; // getter
+this.$store.getters['other/xxxGetter'] // getters
 
-this.$store.commit('other/xxxGetter', payload); // mutations
+this.$store.commit('other/xxxMutations', payload) // mutations
 
-this.$store.dispatch('other/xxxGetter', payload); // actions
+this.$store.dispatch('other/xxxActions', payload) // actions
 ```
 
 ## 搭配firebase的user store(store-firebase-user.js)
